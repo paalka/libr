@@ -18,9 +18,10 @@ def search():
 def find_matching_files(query):
     db_handle = connect_to_db(app.config)
     search_query = """
-                   SELECT file.title, category.title
+                   SELECT file.title, category.title, file.filepath
                    FROM file JOIN category ON file.category = category.id
                    WHERE file.title ILIKE %s OR category.title ILIKE %s;
                    """
     user_query = "%" + query + "%"
-    return execute_query(db_handle, search_query, (user_query, user_query))
+    all_files = execute_query(db_handle, search_query, (user_query, user_query))
+    return all_files
