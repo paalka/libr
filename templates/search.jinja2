@@ -4,24 +4,33 @@
     <meta charset="UTF-8">
     <title>title</title>
 
-     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
-     <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
-  </head>
-  <body ng-controller="FileSearchController">
-    <form role="form" ng-submit="getResults()">
-      <div class="form-group">
-	<input type="text" name="url" class="form-control" id="url-box" placeholder="Enter URL..." style="max-width: 300px;" ng-model="url" required>
-      </div>
-      <button type="submit" class="btn btn-default">Submit</button>
-    </form>
-    <div id="search-results">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}"></script>
+</head>
+<body ng-controller="FileSearchController">
+  <div class="container section" id="main-container">
+    <div class="row">
+      <form role="form" ng-submit="getResults()">
+	<div class="form-group eight columns">
+	  <input type="text" name="url" class="form-control" id="url-box" placeholder="Enter URL..." style="width: 100%" ng-model="url" required>
+	</div>
+	<div class="four columns">
+	  <button type="submit" class="btn btn-default">Submit</button>
+	</div>
+      </form>
+    </div>
+    <div class="container section" id="search-results">
       {% raw %}
-      <div ng-repeat="file in matchingFiles">
-	<p class="fileTitle"> {{ file[0] }} </p>
-	<p class="fileCategory"> {{ file[1] }} </p>
+      <div class="row" ng-repeat="file in matchingFiles">
+	<a class="file-link" href="/static/{{ file[2] }}" target="_blank"><p class="file-title"> {{ file[0] }} </p></a>
+	<p class="file-category"> {{ file[1] }} </p>
       </div>
       {% endraw %}
     </div>
-  </body>
+  </div>
+</body>
 </html>
