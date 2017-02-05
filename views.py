@@ -1,5 +1,7 @@
 from flask import render_template
 from flask import request
+import json
+
 from libr import app
 from db import connect_to_db, execute_query
 
@@ -17,7 +19,7 @@ def index(query=None):
 @app.route("/search/", methods=["POST"])
 def search():
     matching_files = find_matching_files(request.form.get("query"))
-    return "hi"
+    return json.dumps(matching_files)
 
 def find_matching_files(query):
     db_handle = connect_to_db(app.config)
