@@ -7,7 +7,7 @@
     app.controller("FileSearchController", ["$scope", "$log", "$http", function($scope, $log, $http) {
 	$scope.getResults = function() {
 	    $log.log("Fetching results...");
-	    var query = $scope.url;
+	    var query = $scope.query;
 
 	    $http.post("/search/", {"query": query}).
 		success(function(results) {
