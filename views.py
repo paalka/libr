@@ -6,15 +6,8 @@ from libr import app
 from db import connect_to_db, execute_query
 
 @app.route("/")
-@app.route("/search/<query>", methods=["GET"])
-def index(query=None):
-    matching_files = {}
-    if query != None:
-        pass
-    else:
-        matching_files = find_matching_files(query)
-
-    return render_template("search.jinja2", matching_files=matching_files)
+def index():
+    return render_template("search.jinja2")
 
 @app.route("/search/", methods=["POST"])
 def search():
