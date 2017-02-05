@@ -1,0 +1,12 @@
+body {
+    background-color: #fff;
+}
+
+#search-bar-container {
+    padding: 10px 0 10px 0;
+    background-color: #f6f6f6;
+}
+
+#search-result-container {
+    padding-top: 20px;
+}
