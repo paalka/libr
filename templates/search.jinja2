@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="FileSearch">
+  <head>
+    <meta charset="UTF-8">
+    <title>title</title>
+
+     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
+     <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </head>
+  <body ng-controller="FileSearchController">
+    <form role="form" ng-submit="getResults()">
+      <div class="form-group">
+	<input type="text" name="url" class="form-control" id="url-box" placeholder="Enter URL..." style="max-width: 300px;" ng-model="url" required>
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    <div id="search-results">
+      {% raw %}
+      <div ng-repeat="file in matchingFiles">
+	<p class="fileTitle"> {{ file[0] }} </p>
+	<p class="fileCategory"> {{ file[1] }} </p>
+      </div>
+      {% endraw %}
+    </div>
+  </body>
+</html>
