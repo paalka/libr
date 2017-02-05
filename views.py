@@ -1,6 +1,6 @@
-from libr import app
 from flask import render_template
 from flask import request
+from libr import app
 from db import connect_to_db, execute_query
 
 @app.route("/")
