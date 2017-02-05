@@ -12,7 +12,8 @@ def index():
 @app.route("/search/", methods=["POST"])
 def search():
     query_dict = request.get_json()
-    matching_files = find_matching_files(query_dict["query"])
+    query = query_dict.get("query", "")
+    matching_files = find_matching_files(query)
     return json.dumps(matching_files)
 
 def find_matching_files(query):
