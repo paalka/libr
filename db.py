@@ -1,5 +1,4 @@
 import psycopg2
-import config
 
 def create_connection_string(db_host, db_name, db_user, db_passwd):
     return "host='{}' dbname='{}' user='{}' password='{}'".format(db_host, db_name, db_user, db_passwd)
