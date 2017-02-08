@@ -1,18 +1,7 @@
-<!DOCTYPE html>
-<html ng-app="FileSearch">
-  <head>
-    <meta charset="UTF-8">
-    <title>title</title>
-
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
-  </head>
-  <body ng-controller="FileSearchController">
+{% extends "base.jinja2" %}
+  {% block ngApp %} ng-app="FileSearch" {% endblock %}
+  {% block ngController %} ng-controller="FileSearchController" {% endblock %}
+  {% block body %}
     <div id="search-bar-container"> 
       <div class="container section">
 	<form role="form" ng-submit="getResults()">
@@ -33,5 +22,4 @@
       </div>
       {% endraw %}
     </div>
-  </body>
-</html>
+  {% endblock %}
