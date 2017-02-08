@@ -2,6 +2,25 @@ body {
     background-color: #fff;
 }
 
+#menu {
+    background-color: #f6f6f6;
+    padding: 15px;
+}
+
+#menu ul {
+    display: block;
+    list-style-type: none;
+}
+
+#menu ul li {
+    margin-left: 20px;
+    float: left;
+}
+
+#menu ul li a {
+    color: black;
+}
+
 #search-bar-container {
     padding: 10px 0 10px 0;
     background-color: #f6f6f6;
