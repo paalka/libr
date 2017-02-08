@@ -3,4 +3,6 @@ CONFIG_DICT = {
     "DB_USER" : "libr",
     "DB_HOST" : "localhost",
     "DB_NAME" : "libr",
+    "UPLOAD_FOLDER": "/home/paal/dev/python/libr/uploads",
+    "ALLOWED_EXTENSIONS": set(["pdf"])
 }
