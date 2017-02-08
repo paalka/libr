@@ -1,3 +1,6 @@
+CREATE SCHEMA libr;
+SET SEARCH PATH TO libr;
+
 CREATE TABLE category (
        id serial PRIMARY KEY NOT NULL,
        title varchar(40) NOT NULL,
@@ -14,4 +17,4 @@ CREATE TABLE file (
        category SERIAL REFERENCES category(id)
 );
 
-GRANT SELECT ON ALL TABLES IN SCHEMA PUBLIC TO libr;
+GRANT SELECT,INSERT ON ALL TABLES IN SCHEMA libr TO libr;
