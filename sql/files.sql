@@ -1,5 +1,5 @@
 CREATE SCHEMA libr;
-SET SEARCH PATH TO libr;
+SET SEARCH_PATH TO libr;
 
 CREATE TABLE category (
        id serial PRIMARY KEY NOT NULL,
