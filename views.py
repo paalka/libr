@@ -33,6 +33,13 @@ def find_matching_files(query):
     all_files = execute_select_query(db_handle, search_query, (user_query, user_query))
     return all_files
 
+def add_file(filename, filepath):
+    db_handle = connect_to_db(app.config)
+    insert_query = """
+                   INSERT INTO libr.file (title, filepath) VALUES (%s, %s);
+                   """
+    execute_insert_query(db_handle, insert_query, (filename, filepath))
+
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
@@ -41,14 +48,15 @@ def upload_file():
         if 'file' not in request.files:
             return redirect(request.url)
         uploaded_file = request.files['file']
+        file_title = request.form.get("title")
         # if user does not select file, browser also
         # submit a empty part without filename
         if uploaded_file.filename == '':
             return redirect(request.url)
         if uploaded_file and allowed_file(uploaded_file.filename):
-            filename = secure_filename(uploaded_file.filename)
-            uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('index',
-                                    filename=filename))
+            filepath = secure_filename(uploaded_file.filename)
+            add_file(file_title, filepath)
+            uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filepath))
+            return redirect(url_for('index'))
 
     return render_template("upload.jinja2")
