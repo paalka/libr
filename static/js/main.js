@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    var imports = ['ngRoute'];
+    var imports = [];
     var app = angular.module("FileSearch", imports);
 
     app.controller("FileSearchController", ["$scope", "$log", "$http", function($scope, $log, $http) {
