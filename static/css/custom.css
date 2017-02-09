@@ -21,6 +21,10 @@ body {
     color: black;
 }
 
+#upload-container {
+    padding-top: 20px;
+}
+
 #search-bar-container {
     padding: 10px 0 10px 0;
     background-color: #f6f6f6;
