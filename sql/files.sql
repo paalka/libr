@@ -17,4 +17,7 @@ CREATE TABLE file (
        category SERIAL REFERENCES category(id)
 );
 
+GRANT USAGE ON SCHEMA libr TO libr;
+GRANT SELECT,UPDATE ON file_id_seq TO libr;
+GRANT SELECT,UPDATE ON file_category_seq TO libr;
 GRANT SELECT,INSERT ON ALL TABLES IN SCHEMA libr TO libr;
