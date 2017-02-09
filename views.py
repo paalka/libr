@@ -6,7 +6,7 @@ from werkzeug.utils import secure_filename
 import json
 
 from libr import app
-from db import connect_to_db, execute_query
+from db import connect_to_db, execute_select_query, execute_insert_query
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config.get("ALLOWED_EXTENSIONS")
@@ -30,7 +30,7 @@ def find_matching_files(query):
                    WHERE file.title ILIKE %s OR file.filepath ILIKE %s;
                    """
     user_query = "%" + query + "%"
-    all_files = execute_query(db_handle, search_query, (user_query, user_query))
+    all_files = execute_select_query(db_handle, search_query, (user_query, user_query))
     return all_files
 
 
