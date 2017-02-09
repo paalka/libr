@@ -1,23 +1,20 @@
 CREATE SCHEMA libr;
 SET SEARCH_PATH TO libr;
 
-CREATE TABLE category (
-       id serial PRIMARY KEY NOT NULL,
-       title varchar(40) NOT NULL,
-       category SERIAL REFERENCES category(id)
-);
-
 CREATE TABLE file (
        id SERIAL PRIMARY KEY NOT NULL,
        date_added date NOT NULL DEFAULT CURRENT_DATE,
 
        title varchar(50) NOT NULL,
-       filepath varchar(140) NOT NULL,
+       filepath varchar(140) NOT NULL
+);
 
-       category SERIAL REFERENCES category(id)
+CREATE TABLE tag (
+       id serial PRIMARY KEY NOT NULL,
+       title varchar(40) NOT NULL,
+       file_id SERIAL REFERENCES file(id)
 );
 
 GRANT USAGE ON SCHEMA libr TO libr;
 GRANT SELECT,UPDATE ON file_id_seq TO libr;
-GRANT SELECT,UPDATE ON file_category_seq TO libr;
 GRANT SELECT,INSERT ON ALL TABLES IN SCHEMA libr TO libr;
