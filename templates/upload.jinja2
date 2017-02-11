@@ -7,10 +7,12 @@
     <form method=post enctype=multipart/form-data>
     <input type=file name=file>
     <div class="row">
+	<label for="title">Title*</label>
 	<input type="text" name="title" placeholder="Title" required>
     </div>
     <div class="row">
-        <textarea rows="4"  name="tags" placeholder="Tags"></textarea>
+	<label for="tags">Tags (separated by spaces)</label>
+	<textarea rows="4"  name="tags" placeholder="Tags"></textarea>
     </div>
     <div class="row">
 	<input type=submit value=Upload>
