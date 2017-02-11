@@ -4,6 +4,15 @@
 <div class="container section" id="upload-container">
   <div class="row">
     <h4 class="section-title">Upload new file</h4>
+    {% if errors %}
+    <div class="row" id="errors">
+	 <ul>
+	 {% for error in errors %}
+	    <li class="error-message">{{ error }}</li>
+	 {% endfor %}
+	 </ul>
+    </div>
+    {% endif %}
     <form method=post enctype=multipart/form-data>
     <input type=file name=file>
     <div class="row">

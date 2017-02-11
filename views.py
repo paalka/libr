@@ -45,18 +45,29 @@ def add_file(filename, tags, filepath, category_id):
 def upload_file():
     if request.method == 'POST':
 
-        # check if the post request has the file part
+        errors = []
+
+        # check if the POST request has the file part
         if 'file' not in request.files:
-            return redirect(request.url)
+            errors.append("No file given!")
+            return render_template("upload.jinja2", errors=errors)
+
         uploaded_file = request.files['file']
         file_title = request.form.get("title")
         category_id = request.form.get("category")
         tags = request.form.get("tags")
 
-        # if user does not select file, browser also
-        # submit a empty part without filename
         if uploaded_file.filename == '':
-            return redirect(request.url)
+            errors.append("The filename cannot be empty!")
+
+        if not file_title:
+            errors.append("The file must have a title!")
+
+        if not category_id:
+            errors.append("A category must be selected!")
+
+        if len(errors) > 0:
+            return render_template("upload.jinja2", errors=errors)
 
         if uploaded_file and allowed_file(uploaded_file.filename):
             filepath = secure_filename(uploaded_file.filename)

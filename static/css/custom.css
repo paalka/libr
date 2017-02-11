@@ -50,3 +50,7 @@ body {
 .file-tags {
     color: #aeaeae;
 }
+
+.error-message {
+    color: #f44259;
+}
