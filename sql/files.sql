@@ -6,10 +6,11 @@ CREATE TABLE file (
        date_added date NOT NULL DEFAULT CURRENT_DATE,
 
        title varchar(50) NOT NULL,
-       filepath varchar(140) NOT NULL
+       filepath varchar(140) NOT NULL,
+       tags text
 );
 
-CREATE TABLE tag (
+CREATE TABLE category (
        id serial PRIMARY KEY NOT NULL,
        title varchar(40) NOT NULL,
        file_id SERIAL REFERENCES file(id)
