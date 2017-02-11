@@ -25,7 +25,7 @@ def search():
 def find_matching_files(query):
     db_handle = connect_to_db(app.config)
     search_query = """
-                   SELECT file.title, file.tags
+                   SELECT file.title, file.tags, file.filepath
                    FROM libr.file
                    WHERE file.title ILIKE %s OR file.tags ILIKE %s;
                    """
