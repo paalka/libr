@@ -27,10 +27,10 @@ def find_matching_files(query):
     search_query = """
                    SELECT file.title, file.tags, file.filepath, category.title
                    FROM libr.file JOIN category ON file.category = category.id
-                   WHERE file.title ILIKE %s OR file.tags ILIKE %s;
+                   WHERE file.title ILIKE %s OR file.tags ILIKE %s OR category.title ILIKE %s;
                    """
     user_query = "%" + query + "%"
-    all_files = execute_select_query(db_handle, search_query, (user_query, user_query))
+    all_files = execute_select_query(db_handle, search_query, (user_query, user_query, user_query))
     return all_files
 
 def add_file(filename, tags, filepath, category_id):
