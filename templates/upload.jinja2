@@ -4,6 +4,9 @@
 <div class="container section" id="upload-container">
   <div class="row">
     <h4 class="section-title">Upload new file</h4>
+    {% if successful %}
+    <p> The file was successfully uploaded! </p>
+    {% endif %}
     {% if errors %}
     <div class="row" id="errors">
 	 <ul>

@@ -73,7 +73,7 @@ def upload_file():
             filepath = secure_filename(uploaded_file.filename)
             add_file(file_title, tags, filepath, category_id)
             uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filepath))
-            return redirect(url_for('index'))
+            return render_template("upload.jinja2", successful=True)
 
     db_handle = connect_to_db(app.config)
     all_categories = execute_select_query(db_handle, "SELECT * FROM category")
