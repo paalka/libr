@@ -41,3 +41,12 @@ body {
 .search-result-item {
     margin-top: 30px;
 }
+
+
+.file-title {
+    margin-bottom: 5px;
+}
+
+.file-tags {
+    color: #aeaeae;
+}
