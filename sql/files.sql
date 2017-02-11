@@ -12,8 +12,12 @@ CREATE TABLE file (
 
 CREATE TABLE category (
        id serial PRIMARY KEY NOT NULL,
-       title varchar(40) NOT NULL,
-       file_id SERIAL REFERENCES file(id)
+       title varchar(40) NOT NULL
+);
+
+CREATE TABLE subcategory (
+       parent int REFERENCES category(id),
+       child int REFERENCES category(id)
 );
 
 GRANT USAGE ON SCHEMA libr TO libr;
