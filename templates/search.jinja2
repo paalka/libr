@@ -18,7 +18,8 @@
 <div class="container section" id="search-result-container">
   {% raw %}
   <div class="row" ng-repeat="file in matchingFiles">
-    <a class="file-link" href="/static/{{ file[2] }}" target="_blank"><h4 class="file-title"> {{ file[0] }} </a></h4>
+    <span class="category-title">{{ file[3] }}</span>
+    <a class="file-link" href="/uploads/{{ file[2] }}" target="_blank"><h4 class="file-title"> {{ file[0] }} </h4></a>
     <p class="file-category"> {{ file[1] }} </p>
   </div>
   {% endraw %}
