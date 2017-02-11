@@ -10,6 +10,16 @@
 	<label for="title">Title*</label>
 	<input type="text" name="title" placeholder="Title" required>
     </div>
+    {% if all_categories %}
+    <div class="row">
+	 <label for="category">Category*</label>
+	 <select name="category" required>>
+		{% for category in all_categories %}
+		<option value="{{ category.0 }}">{{ category.1 }}</option>
+		{% endfor %}
+	 </select>
+    </div>
+    {% endif %}
     <div class="row">
 	<label for="tags">Tags (separated by spaces)</label>
 	<textarea rows="4"  name="tags" placeholder="Tags"></textarea>
