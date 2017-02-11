@@ -37,3 +37,7 @@ body {
 .section-title {
     padding-bottom: 35px;
 }
+
+.search-result-item {
+    margin-top: 30px;
+}
