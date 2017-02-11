@@ -1,0 +1,8 @@
+CONFIG_DICT = {
+    "DB_PASSWD" : "super secret password",
+    "DB_USER" : "libr",
+    "DB_HOST" : "localhost",
+    "DB_NAME" : "libr",
+    "UPLOAD_FOLDER": "/var/www/libr_uploads/",
+    "ALLOWED_EXTENSIONS": set(["pdf"])
+}
