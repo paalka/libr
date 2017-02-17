@@ -1,8 +1,12 @@
-CONFIG_DICT = {
-    "DB_PASSWD" : "super secret password",
-    "DB_USER" : "libr",
-    "DB_HOST" : "localhost",
-    "DB_NAME" : "libr",
-    "UPLOAD_FOLDER": "/var/www/libr_uploads/",
-    "ALLOWED_EXTENSIONS": set(["pdf"])
-}
+from base import BaseConfig
+
+class LocalConfig(BaseConfig):
+    WTF_CSRF_SECRET_KEY = "very secret"
+    SECRET_KEY = "very secret"
+
+    DB_PASSWD = "Super secr3t"
+    DB_USER = "libr"
+    DB_HOST = "localhost"
+    DB_NAME = "libr"
+    UPLOAD_FOLDER = "/path/to/upload/folder"
+    ALLOWED_EXTENSIONS = set(["pdf"])
