@@ -18,6 +18,12 @@ def execute_select_query(db_handle, query, parms=None):
 
     return cursor.fetchall()
 
+def execute_select_query_one(db_handle, query, parms=None):
+    cursor = db_handle.cursor()
+    cursor.execute(query, parms)
+
+    return cursor.fetchone()
+
 def execute_insert_query(db_handle, query, parms=None):
     cursor = db_handle.cursor()
     cursor.execute(query, parms)
