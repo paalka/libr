@@ -29,6 +29,11 @@ def execute_insert_query(db_handle, query, parms=None):
     cursor.execute(query, parms)
     db_handle.commit()
 
+def execute_update_query(db_handle, query, parms=None):
+    cursor = db_handle.cursor()
+    cursor.execute(query, parms)
+    db_handle.commit()
+
 def open_db():
     g.psql_dbh = connect_to_db(current_app.config)
 
