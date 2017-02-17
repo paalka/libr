@@ -1,3 +1,4 @@
+from flask import g, current_app
 import psycopg2
 
 def create_connection_string(db_host, db_name, db_user, db_passwd):
@@ -21,3 +22,14 @@ def execute_insert_query(db_handle, query, parms=None):
     cursor = db_handle.cursor()
     cursor.execute(query, parms)
     db_handle.commit()
+
+def open_db():
+    g.psql_dbh = connect_to_db(current_app.config)
+
+def init_dbh(app):
+    app.before_request(open_db)
+    app.teardown_request(close_db)
+
+def close_db(error):
+    if hasattr(g, 'psql_dbh'):
+        g.psql_dbh.close()
