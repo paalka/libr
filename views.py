@@ -6,10 +6,8 @@ from werkzeug.utils import secure_filename
 import json
 
 from libr import app
-from db import connect_to_db, execute_select_query, execute_insert_query
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config.get("ALLOWED_EXTENSIONS")
+from models.file import add_file, update_file, find_matching_files, get_file_data, get_all_categories
+from models.file import allowed_file
 
 @app.route("/")
 def index():
@@ -22,23 +20,6 @@ def search():
     matching_files = find_matching_files(query)
     return json.dumps(matching_files)
 
-def find_matching_files(query):
-    db_handle = connect_to_db(app.config)
-    search_query = """
-                   SELECT file.title, file.tags, file.filepath, category.title
-                   FROM libr.file JOIN category ON file.category = category.id
-                   WHERE file.title ILIKE %s OR file.tags ILIKE %s OR category.title ILIKE %s;
-                   """
-    user_query = "%" + query + "%"
-    all_files = execute_select_query(db_handle, search_query, (user_query, user_query, user_query))
-    return all_files
-
-def add_file(filename, tags, filepath, category_id):
-    db_handle = connect_to_db(app.config)
-    insert_query = """
-                   INSERT INTO libr.file (title, filepath, tags, category) VALUES (%s, %s, %s, %s);
-                   """
-    execute_insert_query(db_handle, insert_query, (filename, filepath, tags, category_id))
 
 
 @app.route('/upload', methods=['GET', 'POST'])
