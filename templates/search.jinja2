@@ -18,9 +18,14 @@
 <div class="container section" id="search-result-container">
   {% raw %}
   <div class="row search-result-item" ng-repeat="file in matchingFiles">
-    <span class="category-title">{{ file[3] }}</span>
-    <a class="file-link" href="/uploads/{{ file[2] }}" target="_blank"><h4 class="file-title"> {{ file[0] }} </h4></a>
-    <p class="file-tags"> {{ file[1] }} </p>
+    <div class="ten columns">
+      <span class="category-title">{{ file[3] }}</span>
+      <a class="file-link" href="/uploads/{{ file[2] }}" target="_blank"><h4 class="file-title"> {{ file[0] }} </h4></a>
+      <p class="file-tags"> {{ file[1] }} </p>
+    </div>
+    <div class="two columns" style="float: right">
+      <span class="file-edit"><a href="/edit/{{ file[4] }}">edit</a></span>
+    </div>
   </div>
   {% endraw %}
 </div>

@@ -1,13 +1,12 @@
-from flask import render_template
-from flask import request, redirect, url_for
 import os
-from werkzeug.utils import secure_filename
-
 import json
+from flask import request, redirect, url_for, g, render_template
+from werkzeug.utils import secure_filename
 
 from libr import app
 from models.file import add_file, update_file, find_matching_files, get_file_data, get_all_categories
 from models.file import allowed_file
+from forms import FileForm
 
 @app.route("/")
 def index():
@@ -17,45 +16,61 @@ def index():
 def search():
     query_dict = request.get_json()
     query = query_dict.get("query", "")
-    matching_files = find_matching_files(query)
+    matching_files = find_matching_files(g.psql_dbh, query)
     return json.dumps(matching_files)
 
+
+@app.route("/edit/<int:file_id>", methods=["GET", "POST"])
+def edit(file_id):
+    file_form = FileForm()
+    all_categories = get_all_categories(g.psql_dbh)
+    file_form.uploaded_file.validators = []
+    file_form.categories.choices = all_categories
+
+    file_data = get_file_data(g.psql_dbh, file_id)
+
+    if request.method == 'POST' and file_form.validate_on_submit():
+        uploaded_file = file_form.uploaded_file.data
+        filepath = secure_filename(uploaded_file.filename)
+
+        file_title = file_form.file_title.data
+        tags = file_form.tags.data
+        category_id = file_form.categories.data
+
+        if filepath == '':
+            uploaded_file = file_data[2]
+        else:
+            uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filepath))
+            uploaded_file = filepath
+
+        update_file(g.psql_dbh, file_title, tags, uploaded_file, category_id, file_id)
+        return redirect("/edit/" + str(file_id))
+
+    elif request.method == 'GET':
+        file_form.file_title.data = file_data[0]
+        file_form.categories.data = file_data[4]
+        file_form.tags.data = file_data[1]
+        file_form.uploaded_file.extra = "Current file: " + file_data[2]
+
+    return render_template("edit.jinja2", form=file_form)
 
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
-    if request.method == 'POST':
+    upload_form = FileForm()
+    all_categories = get_all_categories(g.psql_dbh)
+    upload_form.categories.choices = all_categories
 
-        errors = []
+    if request.method == 'POST' and upload_form.validate_on_submit():
+        uploaded_file = upload_form.uploaded_file.data
+        filepath = secure_filename(uploaded_file.filename)
+        uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filepath))
 
-        # check if the POST request has the file part
-        if 'file' not in request.files:
-            errors.append("No file given!")
-            return render_template("upload.jinja2", errors=errors)
+        file_title = upload_form.file_title.data
+        tags = upload_form.tags.data
+        category_id = upload_form.categories.data
 
-        uploaded_file = request.files['file']
-        file_title = request.form.get("title")
-        category_id = request.form.get("category")
-        tags = request.form.get("tags")
+        add_file(g.psql_dbh, file_title, tags, filepath, category_id)
 
-        if uploaded_file.filename == '':
-            errors.append("The filename cannot be empty!")
 
-        if not file_title:
-            errors.append("The file must have a title!")
-
-        if not category_id:
-            errors.append("A category must be selected!")
-
-        if len(errors) > 0:
-            return render_template("upload.jinja2", errors=errors)
-
-        if uploaded_file and allowed_file(uploaded_file.filename):
-            filepath = secure_filename(uploaded_file.filename)
-            add_file(file_title, tags, filepath, category_id)
-            uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filepath))
-            return render_template("upload.jinja2", successful=True)
-
-    db_handle = connect_to_db(app.config)
-    all_categories = execute_select_query(db_handle, "SELECT * FROM category")
-    return render_template("upload.jinja2", all_categories=all_categories)
+    return render_template("upload.jinja2", form=upload_form)

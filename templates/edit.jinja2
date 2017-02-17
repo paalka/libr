@@ -3,9 +3,9 @@
 {% block body %}
 <div class="container section" id="upload-container">
   <div class="row">
-    <h4 class="section-title">Upload new file</h4>
+    <h4 class="section-title">Edit {{ form.file_title.data }}</h4>
     {% if successful %}
-    <p> The file was successfully uploaded! </p>
+    <p> The file was successfully edited! </p>
     {% endif %}
     {% if errors %}
     <div class="row" id="errors">
@@ -16,7 +16,7 @@
 	 </ul>
     </div>
     {% endif %}
-    <form method="post" enctype="multipart/form-data">
+    <form method=post enctype=multipart/form-data>
       {% from "_formhelpers.jinja2" import render_field %}
           {{ form.csrf_token }}
 	  {{ render_field(form.uploaded_file) }}

@@ -54,3 +54,7 @@ body {
 .error-message {
     color: #f44259;
 }
+
+.file-edit a {
+    color: #aeaeae;
+}
