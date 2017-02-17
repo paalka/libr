@@ -51,8 +51,9 @@ body {
     color: #aeaeae;
 }
 
-.error-message {
+.errors li {
     color: #f44259;
+    list-style: none;
 }
 
 .file-edit a {
