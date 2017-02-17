@@ -5,7 +5,6 @@ from werkzeug.utils import secure_filename
 
 from libr import app
 from models.file import add_file, update_file, find_matching_files, get_file_data, get_all_categories
-from models.file import allowed_file
 from forms import FileForm
 
 @app.route("/")
