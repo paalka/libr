@@ -1,4 +1,4 @@
-import libr.db as db_helpers
+import db as db_helpers
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config.get("ALLOWED_EXTENSIONS")
