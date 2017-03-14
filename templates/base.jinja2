@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <title>libr - {% block pageTitle %}{% endblock %}</title>
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.1.1.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
   </head>
-  <body {% block ngController %}{% endblock %}>
+  <body>
     <div id="menu">
       <ul>
 	<li><a href="/">Search</a></li>

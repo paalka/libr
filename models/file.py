@@ -22,7 +22,7 @@ def update_file(dbh, filename, tags, filepath, category_id, file_id):
 
 def find_matching_files(dbh, query):
     search_query = """
-                   SELECT file.title, file.tags, file.filepath, category.title, file.id
+                   SELECT file.id, file.title, file.tags, file.filepath, category.title
                    FROM libr.file JOIN category ON file.category = category.id
                    WHERE file.title ILIKE %s OR file.tags ILIKE %s OR category.title ILIKE %s;
                    """
@@ -37,6 +37,14 @@ def get_file_data(dbh, file_id):
                  WHERE file.id = %s;
                  """
     return db_helpers.execute_select_query_one(dbh, file_query, (file_id,))
+
+def get_n_newest_files(dbh, num_files):
+    file_query = """
+                 SELECT file.id, file.title, file.tags, file.filepath, category.title
+                 FROM libr.file JOIN category ON file.category = category.id
+                 ORDER BY date_added DESC LIMIT %s;
+                 """
+    return db_helpers.execute_select_query(dbh, file_query, (num_files,))
 
 def get_all_categories(dbh):
     category_query = """

@@ -4,12 +4,13 @@ from flask import request, redirect, url_for, g, render_template
 from werkzeug.utils import secure_filename
 
 from libr import app
-from models.file import add_file, update_file, find_matching_files, get_file_data, get_all_categories
+from models.file import add_file, update_file, find_matching_files, get_file_data, get_all_categories, get_n_newest_files
 from forms import FileForm
 
 @app.route("/")
 def index():
-    return render_template("search.jinja2")
+    newest_files = get_n_newest_files(g.psql_dbh, 25)
+    return render_template("search.jinja2", newest_files=newest_files)
 
 @app.route("/search/", methods=["POST"])
 def search():
