@@ -10,14 +10,16 @@ from forms import FileForm
 @app.route("/")
 def index():
     newest_files = get_n_newest_files(g.psql_dbh, 25)
-    return render_template("search.jinja2", newest_files=newest_files)
+    return render_template("search.jinja2", files=newest_files)
 
 @app.route("/search/", methods=["POST"])
 def search():
     query_dict = request.get_json()
     query = query_dict.get("query", "")
     matching_files = find_matching_files(g.psql_dbh, query)
-    return json.dumps(matching_files)
+
+    html = render_template("search_results.jinja2", files=matching_files)
+    return json.dumps({"html": html.strip()})
 
 
 @app.route("/edit/<int:file_id>", methods=["GET", "POST"])

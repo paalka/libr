@@ -1,0 +1,12 @@
+  {% for file in files %}
+  <div class="row search-result-item">
+    <div class="ten columns">
+      <span class="category-title">{{ file[4] }}</span>
+      <a class="file-link" href="/uploads/{{ file[3] }}" target="_blank"><h4 class="file-title"> {{ file[1] }} </h4></a>
+      <p class="file-tags"> {{ file[2] }} </p>
+    </div>
+    <div class="two columns" style="float: right">
+      <span class="file-edit"><a href="/edit/{{ file[0] }}">edit</a></span>
+    </div>
+  </div>
+  {% endfor %}
