@@ -36,7 +36,7 @@ def edit(file_id):
         filepath = secure_filename(uploaded_file.filename)
 
         file_title = file_form.file_title.data
-        tags = file_form.tags.data
+        tags = file_form.tags.data.lower()
         category_id = file_form.categories.data
 
         if filepath == '':
@@ -70,7 +70,7 @@ def upload_file():
         uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filepath))
 
         file_title = upload_form.file_title.data
-        tags = upload_form.tags.data
+        tags = upload_form.tags.data.lower()
         category_id = upload_form.categories.data
 
         add_file(g.psql_dbh, file_title, tags, filepath, category_id)
