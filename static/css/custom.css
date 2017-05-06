@@ -4,7 +4,7 @@ body {
 
 #menu {
     background-color: #f6f6f6;
-    padding: 15px;
+    padding: 5px;
 }
 
 #menu ul {
@@ -26,7 +26,7 @@ body {
 }
 
 #search-bar-container {
-    padding: 10px 0 10px 0;
+    padding: 5px 0 5px 0;
     background-color: #f6f6f6;
 }
 
@@ -35,7 +35,7 @@ body {
 }
 
 .section-title {
-    padding-bottom: 35px;
+    padding-bottom: 30px;
 }
 
 .search-result-item {
