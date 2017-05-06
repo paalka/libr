@@ -62,6 +62,7 @@ def upload_file():
     upload_form = FileForm()
     all_categories = get_all_categories(g.psql_dbh)
     upload_form.categories.choices = all_categories
+    successful = None
 
     if request.method == 'POST' and upload_form.validate_on_submit():
         uploaded_file = upload_form.uploaded_file.data
@@ -74,5 +75,7 @@ def upload_file():
 
         add_file(g.psql_dbh, file_title, tags, filepath, category_id)
 
+        successful = True
 
-    return render_template("upload.jinja2", form=upload_form)
+
+    return render_template("upload.jinja2", form=upload_form, successful=successful)
