@@ -39,7 +39,7 @@ body {
 }
 
 .search-result-item {
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 
@@ -65,4 +65,8 @@ body {
 #success-text {
     color: #00c677;
     font-size: 18px;
+}
+
+.category-title {
+  font-size: 12px;
 }
