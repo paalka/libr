@@ -59,3 +59,8 @@ body {
 .file-edit a {
     color: #aeaeae;
 }
+
+#success-text {
+    color: #00c677;
+    font-size: 18px;
+}
