@@ -9,3 +9,5 @@ class FileForm(FlaskForm):
     uploaded_file = FileField("PDF file", [FileRequired()])
     tags = TextAreaField('Tags')
 
+class CategoryForm(FlaskForm):
+    category_title = StringField('Category', [validators.Length(min=2, max=70), validators.required()])

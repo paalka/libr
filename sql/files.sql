@@ -24,3 +24,4 @@ CREATE TABLE subcategory (
 GRANT USAGE ON SCHEMA libr TO libr;
 GRANT SELECT,UPDATE ON file_id_seq TO libr;
 GRANT SELECT,UPDATE,INSERT ON ALL TABLES IN SCHEMA libr TO libr;
+GRANT SELECT,UPDATE ON libr.category_id_seq TO libr;

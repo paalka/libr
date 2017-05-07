@@ -5,7 +5,8 @@ from werkzeug.utils import secure_filename
 
 from libr import app
 from models.file import add_file, update_file, find_matching_files, get_file_data, get_all_categories, get_n_newest_files
-from forms import FileForm
+from models.category import add_category
+from forms import FileForm, CategoryForm
 
 @app.route("/")
 def index():
@@ -77,5 +78,17 @@ def upload_file():
 
         successful = True
 
-
     return render_template("upload.jinja2", form=upload_form, successful=successful)
+
+@app.route('/add_category', methods=['GET', 'POST'])
+def category_add():
+    category_form = CategoryForm()
+    successful = None
+
+    if request.method == 'POST' and category_form.validate_on_submit():
+        category_title = category_form.category_title.data
+
+        add_category(g.psql_dbh, category_title)
+        successful = True
+
+    return render_template("add_category.jinja2", form=category_form, successful=successful)

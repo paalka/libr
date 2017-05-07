@@ -1,0 +1,27 @@
+{% extends "base.jinja2" %}
+{% block pageTitle %} Add category {% endblock %}
+{% block body %}
+<div class="container section" id="category-container">
+  <div class="row">
+    <h4 class="section-title">Add category</h4>
+    {% if successful %}
+    <p id="success-text"> The category was successfully added! </p>
+    {% endif %}
+    {% if errors %}
+    <div class="row" id="errors">
+	 <ul>
+	 {% for error in errors %}
+	    <li class="error-message">{{ error }}</li>
+	 {% endfor %}
+	 </ul>
+    </div>
+    {% endif %}
+    <form method="post">
+    {% from "_formhelpers.jinja2" import render_field %}
+    {{ form.csrf_token }}
+	  {{ render_field(form.category_title) }}
+    <p><input type=submit value=Submit>
+    </form>
+  </div>
+</div>
+{% endblock %}
