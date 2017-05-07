@@ -4,7 +4,6 @@
 <div class="container section" id="upload-container">
   <div class="row">
     <h4 class="section-title">Upload new file</h4>
-    <a href="/add_category" target="_blank">Add new category</a>
     {% if successful %}
     <p id="success-text"> The file was successfully uploaded! </p>
     {% endif %}
@@ -20,11 +19,34 @@
     <form method="post" enctype="multipart/form-data">
       {% from "_formhelpers.jinja2" import render_field %}
           {{ form.csrf_token }}
-	  {{ render_field(form.uploaded_file) }}
-	  {{ render_field(form.file_title) }}
-	  {{ render_field(form.categories) }}
-	  {{ render_field(form.tags) }}
-	<p><input type=submit value=Upload>
+	  <div class="row">
+      <div class="twelve columns">
+        {{ render_field(form.uploaded_file) }}
+      </div>
+    </div>
+	  <div class="row">
+      <div class="twelve columns">
+        {{ render_field(form.file_title) }}
+      </div>
+    </div>
+	  <div class="row">
+      <div class="four columns">
+      {{ render_field(form.categories) }}
+      </div>
+      <div class="four columns">
+        <a href="/add_category" target="_blank">Add new category</a>
+      </div>
+    </div>
+	  <div class="row">
+      <div class="twelve columns">
+        {{ render_field(form.tags) }}
+      </div>
+    </div>
+	  <div class="row">
+      <div class="twelve columns">
+        <p><input type=submit value=Upload>
+      </div>
+    </div>
     </form>
   </div>
 </div>
