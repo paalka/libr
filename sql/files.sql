@@ -3,7 +3,7 @@ SET SEARCH_PATH TO libr;
 
 CREATE TABLE category (
        id serial PRIMARY KEY NOT NULL,
-       title varchar(40) NOT NULL
+       title varchar(40) NOT NULL CONSTRAINT category_must_be_unique UNIQUE,
 );
 
 CREATE TABLE file (
