@@ -48,6 +48,6 @@ def get_n_newest_files(dbh, num_files):
 
 def get_all_categories(dbh):
     category_query = """
-                     SELECT * FROM category;
+                     SELECT * FROM category ORDER BY title;
                      """
     return db_helpers.execute_select_query(dbh, category_query, ())
