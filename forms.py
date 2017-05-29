@@ -4,7 +4,7 @@ from flask_wtf.file import FileRequired
 from models.file import allowed_file
 
 class FileForm(FlaskForm):
-    file_title = StringField('Title', [validators.Length(min=4, max=70), validators.required()])
+    file_title = StringField('Title', [validators.Length(min=4), validators.required()])
     categories = SelectField('Category', [validators.required()], coerce=int)
     uploaded_file = FileField("PDF file", [FileRequired()])
     tags = TextAreaField('Tags')
