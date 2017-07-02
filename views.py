@@ -29,6 +29,7 @@ def edit(file_id):
     all_categories = get_all_categories(g.psql_dbh)
     file_form.uploaded_file.validators = []
     file_form.categories.choices = all_categories
+    successful = None
 
     file_data = get_file_data(g.psql_dbh, file_id)
 
@@ -47,7 +48,7 @@ def edit(file_id):
             uploaded_file = filepath
 
         update_file(g.psql_dbh, file_title, tags, uploaded_file, category_id, file_id)
-        return redirect("/edit/" + str(file_id))
+        successful = True
 
     elif request.method == 'GET':
         file_form.file_title.data = file_data[0]
@@ -55,7 +56,7 @@ def edit(file_id):
         file_form.tags.data = file_data[1]
         file_form.uploaded_file.extra = "Current file: " + file_data[2]
 
-    return render_template("edit.jinja2", form=file_form)
+    return render_template("edit.jinja2", form=file_form, successful=successful)
 
 
 @app.route('/upload', methods=['GET', 'POST'])
