@@ -74,3 +74,9 @@ body {
 .category-title {
   font-size: 12px;
 }
+
+
+#pdf-canvas {
+    border: 1px solid rgba(0,0,0,0.2);
+    box-sizing: border-box;
+}

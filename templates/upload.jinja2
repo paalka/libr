@@ -16,10 +16,14 @@
 	 </ul>
     </div>
     {% endif %}
+
     <form method="post" enctype="multipart/form-data">
       {% from "_formhelpers.jinja2" import render_field %}
           {{ form.csrf_token }}
 	  <div class="row">
+      <div class="twelve columns">
+	<canvas id="pdf-canvas" width="400"></canvas>
+      </div>
       <div class="twelve columns">
         {{ render_field(form.uploaded_file) }}
       </div>
@@ -50,4 +54,10 @@
     </form>
   </div>
 </div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/pdf.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/pdf.worker.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/preview-pdf.js') }}"></script>
 {% endblock %}
