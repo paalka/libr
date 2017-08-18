@@ -1,63 +1,48 @@
 {% extends "base.jinja2" %}
 {% block pageTitle %} upload {% endblock %}
-{% block body %}
-<div class="container section" id="upload-container">
-  <div class="row">
-    <h4 class="section-title">Upload new file</h4>
-    {% if successful %}
-    <p id="success-text"> The file was successfully uploaded! </p>
-    {% endif %}
-    {% if errors %}
-    <div class="row" id="errors">
-	 <ul>
-	 {% for error in errors %}
-	    <li class="error-message">{{ error }}</li>
-	 {% endfor %}
-	 </ul>
-    </div>
-    {% endif %}
 
-    <form method="post" enctype="multipart/form-data">
-      {% from "_formhelpers.jinja2" import render_field %}
-          {{ form.csrf_token }}
-	  <div class="row">
-      <div class="twelve columns">
-	<canvas id="pdf-canvas" width="400"></canvas>
-      </div>
-      <div class="twelve columns">
-        {{ render_field(form.uploaded_file) }}
-      </div>
+{% block body %}
+
+  <div class="container section" id="upload-container">
+    <div class="row">
+      <h4 class="section-title">Upload new file</h4>
+      {% if successful %}
+	<p id="success-text"> The file was successfully uploaded! </p>
+      {% endif %}
+      {% if errors %}
+	<div class="row" id="errors">
+	  <ul>
+	    {% for error in errors %}
+	      <li class="error-message">{{ error }}</li>
+	    {% endfor %}
+	  </ul>
+	</div>
+      {% endif %}
+
+      <form method="post" enctype="multipart/form-data">
+	{% from "_formhelpers.jinja2" import render_field %}
+	{{ form.csrf_token }}
+	<div class="row">
+	  <div class="five columns">
+	    {{ render_field(form.uploaded_file) }}
+	    {{ render_field(form.file_title) }}
+	    <div>
+		{{ render_field(form.categories) }}
+		<a href="/add_category" target="_blank">Add new category</a>
+	    </div>
+	    {{ render_field(form.tags) }}
+	    <p><input type=submit value=Upload>
+	  </div>
+	  <div class="seven columns">
+	    <canvas id="pdf-canvas" height="600" width="400"></canvas>
+	  </div>
+      </form>
     </div>
-	  <div class="row">
-      <div class="twelve columns">
-        {{ render_field(form.file_title) }}
-      </div>
-    </div>
-	  <div class="row">
-      <div class="four columns">
-      {{ render_field(form.categories) }}
-      </div>
-      <div class="four columns">
-        <a href="/add_category" target="_blank">Add new category</a>
-      </div>
-    </div>
-	  <div class="row">
-      <div class="twelve columns">
-        {{ render_field(form.tags) }}
-      </div>
-    </div>
-	  <div class="row">
-      <div class="twelve columns">
-        <p><input type=submit value=Upload>
-      </div>
-    </div>
-    </form>
   </div>
-</div>
 {% endblock %}
 
 {% block script %}
-<script type="text/javascript" src="{{ url_for('static', filename='js/pdf.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/pdf.worker.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/preview-pdf.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/pdf.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/pdf.worker.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/preview-pdf.js') }}"></script>
 {% endblock %}
