@@ -24,7 +24,8 @@ def find_matching_files(dbh, query):
     search_query = """
                    SELECT file.id, file.title, file.tags, file.filepath, category.title
                    FROM libr.file JOIN category ON file.category = category.id
-                   WHERE file.title ILIKE %s OR file.tags ILIKE %s OR category.title ILIKE %s;
+                   WHERE file.title ILIKE %s OR file.tags ILIKE %s OR category.title ILIKE %s
+                   ORDER BY date_added DESC;
                    """
     user_query = "%" + query + "%"
     all_files = db_helpers.execute_select_query(dbh, search_query, (user_query, user_query, user_query))
