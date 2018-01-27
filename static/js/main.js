@@ -1,5 +1,5 @@
 $(function() {
-    $("#search-button").click(function(event) {
+    $("#search-field").keyup(function(event) {
 	event.preventDefault();
 	var query = $("#search-field").val();
 	$.ajax({
