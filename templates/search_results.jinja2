@@ -1,12 +1,14 @@
   {% for file in files %}
-  <div class="row search-result-item">
+  <div class="row search-result-item" data-file-id="{{ file[0] }}">
     <div class="eight columns">
       <a class="file-link" href="/uploads/{{ file[3] }}" target="_blank"><h4 class="file-title"> {{ file[1] }} </h4></a>
       <p class="file-tags"> {{ file[2] }} </p>
     </div>
     <div class="four columns text-align-right">
       <p class="category-title">{{ file[4] }}</p>
-      <p class="file-edit"><a class="file-edit" href="/edit/{{ file[0] }}">edit</a></p>
+      <p class="file-edit-wrapper" id="file-edit-{{ file[0] }}">
+	<a class="file-edit" href="/edit/{{ file[0] }}">edit</a>
+      </p>
     </div>
   </div>
   {% endfor %}

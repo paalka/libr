@@ -67,7 +67,7 @@ html {
     list-style: none;
 }
 
-.file-edit a {
+.file-edit-wrapper a {
     color: #aeaeae;
     font-size: 12px;
 }
@@ -79,6 +79,7 @@ html {
 
 .category-title {
   font-size: 12px;
+  color: #aeaeae;
   margin-bottom: 0;
 }
 
