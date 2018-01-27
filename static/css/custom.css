@@ -69,6 +69,7 @@ html {
 
 .file-edit a {
     color: #aeaeae;
+    font-size: 12px;
 }
 
 #success-text {
@@ -78,7 +79,13 @@ html {
 
 .category-title {
   font-size: 12px;
+  margin-bottom: 0;
 }
+
+.text-align-right {
+    text-align: right;
+}
+
 
 
 #pdf-canvas {

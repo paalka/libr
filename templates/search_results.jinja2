@@ -4,11 +4,9 @@
       <a class="file-link" href="/uploads/{{ file[3] }}" target="_blank"><h4 class="file-title"> {{ file[1] }} </h4></a>
       <p class="file-tags"> {{ file[2] }} </p>
     </div>
-    <div class="three columns">
-      <span class="category-title">{{ file[4] }}</span>
-    </div>
-    <div class="one columns" style="float: right">
-      <span class="file-edit"><a href="/edit/{{ file[0] }}">edit</a></span>
+    <div class="four columns text-align-right">
+      <p class="category-title">{{ file[4] }}</p>
+      <p class="file-edit"><a class="file-edit" href="/edit/{{ file[0] }}">edit</a></p>
     </div>
   </div>
   {% endfor %}
