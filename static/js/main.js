@@ -1,14 +1,14 @@
 function bindEditHandlers() {
-    $(".file-edit-wrapper").hide();
+    $(".file-edit-wrapper").css('visibility', 'hidden');
 
     $(".search-result-item").mouseover(function() {
 	var fileId = $(this).attr("data-file-id");
-	$("#file-edit-" + fileId).show();
+	$("#file-edit-" + fileId).css("visibility", "visible");
     });
 
     $(".search-result-item").mouseout(function() {
 	var fileId = $(this).attr("data-file-id");
-	$("#file-edit-" + fileId).hide();
+	$("#file-edit-" + fileId).css("visibility", "hidden");
     });
 }
 function updateSearchResults(results) {
@@ -25,7 +25,7 @@ function updateSearchResults(results) {
     }
 
     $("#search-result-container").append(results_html);
-    $(".file-edit-wrapper").hide();
+    $(".file-edit-wrapper").css('visibility', 'hidden');
     bindEditHandlers();
 }
 
