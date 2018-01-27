@@ -4,13 +4,15 @@
 <div id="search-bar-container">
   <div class="container section">
     <form role="form">
-      <div class="form-group eight columns">
+      <div class="form-group ten columns">
 	<input type="text" name="query" id="search-field" class="form-control" placeholder="Find file..." style="width: 100%">
       </div>
     </form>
   </div>
 </div>
-<div class="container section" id="search-result-container">
-     {% include 'search_results.jinja2' %}
+<div class="container section">
+  <div class="ten columns" id="search-result-container">
+    {% include 'search_results.jinja2' %}
+  </div>
 </div>
 {% endblock %}
