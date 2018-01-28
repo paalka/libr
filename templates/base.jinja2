@@ -12,13 +12,17 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
   </head>
   <body>
-    <div id="menu">
-      <div class="container row">
-        <ul>
-          <li><a href="/">Search</a></li>
-          <li><a href="/upload">Upload</a></li>
-        </ul>
+    <div id="header">
+      <div id="menu">
+	<div class="container row">
+	  <ul>
+	    <li><a href="/">Search</a></li>
+	    <li><a href="/upload">Upload</a></li>
+	  </ul>
+	</div>
       </div>
+      {% block header %}
+      {% endblock %}
     </div>
     {% block body %}
     {% endblock %}
