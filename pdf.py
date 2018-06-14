@@ -62,5 +62,13 @@ def pdf_from_file(filepath):
         h = hashlib.md5()
         for block in iter(lambda: fh.read(65536), b""):
             h.update(block)
+        category = doc_info.get("/Subject") or ""
+        keywords = doc_info.get("/Keywords") or ""
 
-        return PDF(doc_info.Title.decode(), doc_info.get("Subject") or "", doc_info.get("Keywords") or "", h.hexdigest()[:5], filepath)
+        if keywords:
+            keywords = keywords.decode()
+
+        if category:
+            category = category.decode()
+
+        return PDF(doc_info.Title.decode(),  category or "",  keywords or "", h.hexdigest()[:5], filepath)

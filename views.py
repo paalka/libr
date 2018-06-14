@@ -48,6 +48,7 @@ def edit(file_id):
     elif request.method == 'GET':
         file_form.file_title.data = doc.title
         file_form.tags.data = doc.keywords
+        file_form.category.data = doc.category
         file_form.uploaded_file.extra = "Current file: " + doc.title
 
     return render_template("edit.jinja2", form=file_form, successful=successful)
@@ -63,12 +64,13 @@ def upload_file():
 
         file_title = upload_form.file_title.data
         tags = upload_form.tags.data.lower()
+        category = upload_form.category.data.lower()
 
         ext = pathlib.Path(filepath).suffix
         new_filename = secure_filename(file_title).lower() + ext
 
         output_filepath = os.path.join(app.config["UPLOAD_FOLDER"], new_filename)
-        store_pdf(file_title, tags, "cat", uploaded_file.stream, output_filepath)
+        store_pdf(file_title, tags, category, uploaded_file.stream, output_filepath)
 
         successful = True
 

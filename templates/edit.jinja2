@@ -20,6 +20,7 @@
       {% from "_formhelpers.jinja2" import render_field %}
           {{ form.csrf_token }}
 	  {{ render_field(form.file_title) }}
+	  {{ render_field(form.category) }}
 	  {{ render_field(form.tags) }}
 	<p><input type=submit value="Save changes">
     </form>
