@@ -19,9 +19,7 @@
     <form method=post enctype=multipart/form-data>
       {% from "_formhelpers.jinja2" import render_field %}
           {{ form.csrf_token }}
-	  {{ render_field(form.uploaded_file) }}
 	  {{ render_field(form.file_title) }}
-	  {{ render_field(form.categories) }}
 	  {{ render_field(form.tags) }}
 	<p><input type=submit value="Save changes">
     </form>
