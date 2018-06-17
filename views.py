@@ -7,13 +7,10 @@ from werkzeug.utils import secure_filename
 from libr import app
 from forms import FileForm
 from pdf import PDF, store_pdf, edit_pdf
-from indexer import index_documents
+from indexer import Index
 
 @app.route("/")
 def index():
-    if not app.ind:
-        app.ind = index_documents(app.config["UPLOAD_FOLDER"])
-
     return render_template("search.jinja2", files=app.ind.entries.values())
 
 @app.route("/search/", methods=["POST"])
@@ -21,7 +18,8 @@ def search():
     query_dict = request.get_json()
     query = query_dict.get("query", "")
     if not app.ind:
-        app.ind = index_documents(app.config["UPLOAD_FOLDER"])
+        app.ind = Index()
+        app.ind.index_documents(app.config["UPLOAD_FOLDER"])
     matching_files = app.ind.find(query)
 
     html = render_template("search_results.jinja2", files=matching_files)
@@ -33,18 +31,20 @@ def edit(file_id):
     file_form.uploaded_file.validators = []
     successful = None
 
-    if not app.ind:
-        app.ind = index_documents(app.config["UPLOAD_FOLDER"])
     doc = app.ind.entries.get(file_id)
+    if not doc:
+        return redirect("/")
 
     if request.method == 'POST' and file_form.validate_on_submit():
         file_title = file_form.file_title.data
         tags = file_form.tags.data.lower()
+        tags = file_form.tags.data.lower()
+        category = file_form.category.data.lower()
 
-        new_pdf = edit_pdf(doc, file_title, tags, "cat")
+        new_pdf = edit_pdf(doc, file_title, tags, category)
+        app.ind.index_documents(app.config["UPLOAD_FOLDER"])
         successful = True
-        app.ind = index_documents(app.config["UPLOAD_FOLDER"])
-        return redirect("/edit/" + new_pdf.slug)
+        return redirect("/edit/" + new_pdf.checksum)
     elif request.method == 'GET':
         file_form.file_title.data = doc.title
         file_form.tags.data = doc.keywords
@@ -72,6 +72,7 @@ def upload_file():
         output_filepath = os.path.join(app.config["UPLOAD_FOLDER"], new_filename)
         store_pdf(file_title, tags, category, uploaded_file.stream, output_filepath)
 
+        app.ind.index_documents(app.config["UPLOAD_FOLDER"])
         successful = True
 
     return render_template("upload.jinja2", form=upload_form, successful=successful)

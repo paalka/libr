@@ -1,5 +1,5 @@
 import os
-from pdf import pdf_from_file
+from pdf import pdf_from_file, get_checksum
 
 def find_files(folder_path):
     files = []
@@ -9,20 +9,8 @@ def find_files(folder_path):
 
     return files
 
-def index_documents(doc_path):
-    files = find_files(doc_path)
-    entries = {}
-    for fp in files:
-        path = os.path.join(doc_path, fp.name)
-        pdf = pdf_from_file(path)
-        if pdf and pdf.slug:
-            e = Entry(pdf.title, pdf.subject, pdf.keywords, pdf.slug, path)
-            entries[e.id] = e
-
-    return Index(entries)
-
 class Index:
-    def __init__(self, entries):
+    def __init__(self, entries={}):
         self.entries = entries
 
     def find(self, query):
@@ -35,14 +23,37 @@ class Index:
 
         return matches
 
+    def index_documents(self, doc_path):
+        files = find_files(doc_path)
+        entries = {}
+        for fp in files:
+            docpath = os.path.join(doc_path, fp.name)
+            with open(docpath, "rb") as fh:
+                cs = get_checksum(fh)
+
+                # Don't re-read the file if we have already indexed it.
+                if self.entries.get(cs):
+                    entries[cs] = self.entries[cs]
+                    continue
+
+                pdf = pdf_from_file(fh, docpath, cs)
+
+            if pdf and pdf.slug:
+                e = Entry(pdf.title, pdf.subject, pdf.keywords, pdf.slug, docpath, pdf.checksum)
+                entries[e.checksum] = e
+
+        self.entries = entries
+
 class Entry:
 
-    def __init__(self, title, category, keywords, id, filepath):
+    def __init__(self, title, category, keywords, id, filepath, checksum):
         self.title = title
         self.category = category
         self.keywords = keywords
-        self.filepath = filepath
         self.id = id
+
+        self.filepath = filepath
+        self.checksum = checksum
 
     @property
     def filename(self):

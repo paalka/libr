@@ -1,13 +1,13 @@
   {% for file in files %}
-  <div class="row search-result-item" data-file-id="{{ file.id }}">
+  <div class="row search-result-item" data-file-id="{{ file.checksum }}">
     <div class="eight columns">
       <a class="file-link" href="/uploads/{{ file.filename }}" target="_blank"><h4 class="file-title"> {{ file.title }} </h4></a>
       <p class="file-tags"> {{ file.keywords }} </p>
     </div>
     <div class="four columns text-align-right">
       <p class="category-title">{{ file.subject }}</p>
-      <p class="file-edit-wrapper" id="file-edit-{{ file.id }}">
-	<a class="file-edit" href="/edit/{{ file.id }}">edit</a>
+      <p class="file-edit-wrapper" id="file-edit-{{ file.checksum }}">
+	<a class="file-edit" href="/edit/{{ file.checksum }}">edit</a>
       </p>
     </div>
   </div>

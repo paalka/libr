@@ -5,6 +5,14 @@ import re
 import translitcodec
 import codecs
 
+def get_checksum(fh):
+    fh.seek(0)
+    h = hashlib.md5()
+    for block in iter(lambda: fh.read(65536), b""):
+        h.update(block)
+    fh.seek(0)
+    return h.hexdigest()
+
 _punct_re = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.]+')
 def slugify(text, delim=u'-'):
     """Generates an ASCII-only slug."""
@@ -17,18 +25,18 @@ def slugify(text, delim=u'-'):
 
 class Document:
 
-    def __init__(self, title, subject, keywords, md5hash, filepath):
+    def __init__(self, title, subject, keywords, checksum, filepath):
         self.title = title
         self.subject = subject
         self.keywords = keywords
         self.filepath = filepath
-        self.md5hash = md5hash
+        self.checksum = checksum
 
     @property
     def slug(self):
         if not self.title:
             return ""
-        return slugify(self.title) + "-" + self.md5hash[:4]
+        return slugify(self.title) + "-" + self.checksum[:4]
 
     def save(self, output_filename):
         pass
@@ -49,26 +57,24 @@ def store_pdf(title, keywords, subject, fh, output_filename):
     with open(output_filename, "wb") as out_f:
         PdfWriter(out_f, trailer=inp).write()
 
-    return pdf_from_file(output_filename)
+    with open(output_filename, "rb") as pdf_fh:
+        cs = get_checksum(pdf_fh)
+        return pdf_from_file(pdf_fh, output_filename, cs)
 
-def pdf_from_file(filepath):
-    with open(filepath, "rb") as fh:
-        pdf = PdfReader(fh)
-        doc_info = pdf.Info
+def pdf_from_file(fh, filepath, checksum):
+    pdf = PdfReader(fh)
+    doc_info = pdf.Info
 
-        if not doc_info.Title:
-            return None
+    if not doc_info.Title:
+        return None
 
-        h = hashlib.md5()
-        for block in iter(lambda: fh.read(65536), b""):
-            h.update(block)
-        category = doc_info.get("/Subject") or ""
-        keywords = doc_info.get("/Keywords") or ""
+    category = doc_info.get("/Subject") or ""
+    keywords = doc_info.get("/Keywords") or ""
 
-        if keywords:
-            keywords = keywords.decode()
+    if keywords:
+        keywords = keywords.decode()
 
-        if category:
-            category = category.decode()
+    if category:
+        category = category.decode()
 
-        return PDF(doc_info.Title.decode(),  category or "",  keywords or "", h.hexdigest()[:5], filepath)
+    return PDF(doc_info.Title.decode(), category or "",  keywords or "", checksum, filepath)
