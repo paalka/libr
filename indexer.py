@@ -14,6 +14,7 @@ class Index:
         self.entries = entries
 
     def find(self, query):
+        query = query.lower()
         matches = []
         for e in self.entries.values():
             if e.title and query in e.title.lower():
