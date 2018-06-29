@@ -40,14 +40,14 @@ class Index:
                 pdf = pdf_from_file(fh, docpath, cs)
 
             if pdf and pdf.slug:
-                e = Entry(pdf.title, pdf.subject, pdf.keywords, pdf.slug, docpath, pdf.checksum)
+                e = Entry(pdf.title, pdf.subject, pdf.keywords, pdf.slug, docpath, pdf.checksum, os.stat(docpath).st_mtime)
                 entries[e.checksum] = e
 
         self.entries = entries
 
 class Entry:
 
-    def __init__(self, title, category, keywords, id, filepath, checksum):
+    def __init__(self, title, category, keywords, id, filepath, checksum, last_updated):
         self.title = title
         self.category = category
         self.keywords = keywords
@@ -55,6 +55,7 @@ class Entry:
 
         self.filepath = filepath
         self.checksum = checksum
+        self.last_updated = last_updated
 
     @property
     def filename(self):

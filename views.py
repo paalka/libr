@@ -11,7 +11,7 @@ from indexer import Index
 
 @app.route("/")
 def index():
-    return render_template("search.jinja2", files=app.ind.entries.values())
+    return render_template("search.jinja2", files=sorted(app.ind.entries.values(), key=lambda x: x.last_updated, reverse=True))
 
 @app.route("/search/", methods=["POST"])
 def search():
