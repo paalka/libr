@@ -1,4 +1,4 @@
-from pdfrw import PdfReader, PdfWriter
+from pdfrw import PdfReader, PdfWriter, IndirectPdfDict
 
 import hashlib
 import re
@@ -50,6 +50,7 @@ def edit_pdf(pdf, new_title, new_keywords, new_subject):
 
 def store_pdf(title, keywords, subject, fh, output_filename):
     inp = PdfReader(fh)
+    inp.Info = IndirectPdfDict(inp.Info or {})
     inp.Info.Title = title
     inp.Info.Keywords = keywords
     inp.Info.Subject = subject
